@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "nodemon functions/server.js"
+    "server": "nodemon functions/server.js",
+    "start": "node functions/server.js"
   },
   "keywords": [],
   "author": "Evelin Garrido",
