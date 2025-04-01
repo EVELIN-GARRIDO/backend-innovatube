@@ -31,9 +31,9 @@ app.use(express.json());
 
 app.use('/users', userRoutes);
 
-if (process.env.NODE_ENV === 'development') {
-    const port = process.env.PORT || 8000;
-    app.listen(port, () => {
-        console.log(`Servidor corriendo en el puerto ${port}`);
-    });
-}
+const port = process.env.PORT || 8000;
+
+app.listen(port, () => {
+    console.log(`Servidor corriendo en el puerto ${port}`);
+});
+
