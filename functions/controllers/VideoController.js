@@ -57,7 +57,7 @@ export const searchVideos = async (req, res) => {
 
 /**
  * @swagger
- * /videos/favorite:
+ * /videos/favorite-video:
  *   post:
  *     summary: Guarda un video como favorito
  *     description: Agrega un video a la base de datos y lo marca como favorito.
