@@ -58,7 +58,7 @@ export const loginUser = async (req, res) => {
 
         const token = generateToken({ id: user.id, username: user.username, email: user.email });
 
-        res.status(201).json({ message: "¡Inicio de sesión exitoso!", token, status: 201 });
+        res.status(201).json({ message: "¡Inicio de sesión exitoso!", token, username: user.username, email: user.email, status: 201 });
 
     } catch (error) {
         res.status(500).json({ message: "¡Ha ocurrido un error inesperado en el servidor, intente más tarde!" });
