@@ -1,4 +1,4 @@
-import { stat } from "fs/promises";
+import axios from "axios";
 import pool from "../config/db_conn_postgresql.js";
 import { hashPassword } from "../middleware/auth.js";
 
@@ -37,17 +37,27 @@ import { hashPassword } from "../middleware/auth.js";
  *         description: ¡Todos los campos son obligatorios!
  *       203:
  *         description: ¡El correo electrónico o el nombre de usuario ya está registrado!
+ *       204:
+ *         description: ¡Error en la validación de reCAPTCHA!
  *       500:
  *         description: ¡Error del servidor!
  */
 export const registerUser = async (req, res) => {
-    const { first_name, last_name, username, email, password } = req.body;
+    const { first_name, last_name, username, email, password, recaptchaToken } = req.body;
 
-    if (!first_name || !last_name || !username || !email || !password) {
+    if (!first_name || !last_name || !username || !email || !password || !recaptchaToken) {
         return res.status(202).json({ message: "¡Todos los campos son obligatorios!", status: 202 });
     }
 
     try {
+        const secretKey = "6Lc_CQcrAAAAAK7Fjq7ShsUvP23Fv-_IvsP4LSZK";
+        const verificationURL = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${recaptchaToken}`;
+
+        const recaptchaResponse = await axios.post(verificationURL);
+        if (!recaptchaResponse.data.success) {
+            return res.status(204).json({ message: "¡Error en la validación de reCAPTCHA!" });
+        }
+
         const checkUserQuery = `
             SELECT * FROM users WHERE email = $1 OR username = $2;
         `;
