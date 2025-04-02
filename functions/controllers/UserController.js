@@ -80,7 +80,6 @@ export const registerUser = async (req, res) => {
         res.status(201).json({ message: "¡El usuario ha sido registrado con éxito!", status: 201 });
 
     } catch (error) {
-        console.error(error);
         res.status(500).json({ message: "¡Ha ocurrido un error inesperado en el servidor, intente más tarde!" });
     }
 };

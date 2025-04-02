@@ -2,6 +2,7 @@ import express from 'express';
 import cors from "cors";
 import bodyParser from 'body-parser';
 import userRoutes from './routes/UserRoute.js';
+import authRoutes from './routes/AuthRoute.js';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import path from 'path';
@@ -38,6 +39,7 @@ app.use(bodyParser.json());
 app.use(express.json());
 
 app.use('/users', userRoutes);
+app.use('/auth', authRoutes);
 
 const port = process.env.PORT || 8000;
 

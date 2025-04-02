@@ -21,7 +21,7 @@ export const generateToken = (user) => {
         name: user.name,
         last_name: user.last_name,
     };
-    return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '5h' });
+    return jwt.sign(payload, process.env.JWT_SECRET);
 };
 
 export const verifyToken = (token) => {
