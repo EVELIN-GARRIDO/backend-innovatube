@@ -1,3 +1,4 @@
+import { stat } from "fs/promises";
 import pool from "../config/db_conn_postgresql.js";
 import { hashPassword } from "../middleware/auth.js";
 
@@ -43,7 +44,7 @@ export const registerUser = async (req, res) => {
     const { first_name, last_name, username, email, password } = req.body;
 
     if (!first_name || !last_name || !username || !email || !password) {
-        return res.status(202).json({ message: "¡Todos los campos son obligatorios!" });
+        return res.status(202).json({ message: "¡Todos los campos son obligatorios!", status: 202 });
     }
 
     try {
@@ -54,7 +55,7 @@ export const registerUser = async (req, res) => {
         const existingUser = await pool.query(checkUserQuery, checkUserValues);
 
         if (existingUser.rows.length > 0) {
-            return res.status(203).json({ message: "¡El correo electrónico o el nombre de usuario ya está registrado!" });
+            return res.status(203).json({ message: "¡El correo electrónico o el nombre de usuario ya está registrado!", status: 203 });
         }
 
         const password_hash = hashPassword(password);
@@ -66,7 +67,7 @@ export const registerUser = async (req, res) => {
         const values = [first_name, last_name, username, email, password_hash];
         await pool.query(query, values);
 
-        res.status(201).json({ message: "¡El usuario ha sido registrado con éxito!" });
+        res.status(201).json({ message: "¡El usuario ha sido registrado con éxito!", status: 201 });
 
     } catch (error) {
         console.error(error);

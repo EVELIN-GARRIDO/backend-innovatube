@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from "cors";
 import bodyParser from 'body-parser';
 import userRoutes from './routes/UserRoute.js';
 import swaggerJSDoc from 'swagger-jsdoc';
@@ -24,6 +25,13 @@ const swaggerOptions = {
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
+const corsOptions = {
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+};
+app.use(cors(corsOptions));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
