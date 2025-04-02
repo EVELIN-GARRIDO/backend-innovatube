@@ -31,14 +31,14 @@ import { hashPassword } from "../middleware/auth.js";
  *                 type: string
  *                 example: "password123"
  *     responses:
+ *       200:
+ *         description: ¡Error en la validación de reCAPTCHA!
  *       201:
  *         description: ¡Usuario registrado con éxito!
  *       202:
  *         description: ¡Todos los campos son obligatorios!
  *       203:
  *         description: ¡El correo electrónico o el nombre de usuario ya está registrado!
- *       204:
- *         description: ¡Error en la validación de reCAPTCHA!
  *       500:
  *         description: ¡Error del servidor!
  */
@@ -55,7 +55,7 @@ export const registerUser = async (req, res) => {
 
         const recaptchaResponse = await axios.post(verificationURL);
         if (!recaptchaResponse.data.success) {
-            return res.status(204).json({ message: "¡Error en la validación de reCAPTCHA!" });
+            return res.status(200).json({ message: "¡Error en la validación de reCAPTCHA!", status: 200 });
         }
 
         const checkUserQuery = `

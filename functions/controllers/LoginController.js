@@ -19,14 +19,14 @@ import { verifyPassword, generateToken } from "../middleware/auth.js";
  *               password:
  *                 type: string
  *     responses:
+ *       200:
+ *         description: ¡Contraseña incorrecta, verifique que los datos sean correctos!
  *       201:
  *         description: ¡Inicio de sesión exitoso!
  *       202:
  *         description: ¡El email o nombre de usuario y contraseña son requeridos!
  *       203:
  *         description: ¡El nombre de usuario o correo no fue encontrado!
- *       204:
- *         description: ¡Contraseña incorrecta, verifique que los datos sean correctos!
  *       500:
  *         description: ¡Error del servidor!
  */
@@ -50,8 +50,10 @@ export const loginUser = async (req, res) => {
 
         const isPasswordValid = verifyPassword(password, user.password_hash);
 
+        console.log(!isPasswordValid)
+
         if (!isPasswordValid) {
-            return res.status(204).json({ message: "¡Contraseña incorrecta, verifique que los datos sean correctos!" });
+            return res.status(200).json({ message: "¡Contraseña incorrecta, verifique que los datos sean correctos!", status: 200 });
         }
 
         const token = generateToken({ id: user.id, username: user.username, email: user.email });
