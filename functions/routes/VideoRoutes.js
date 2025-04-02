@@ -5,6 +5,6 @@ import { searchVideos, saveFavoriteVideo } from '../controllers/VideoController.
 const router = express.Router();
 
 router.get('/search', searchVideos, authenticate);
-router.post('/favprite-video', saveFavoriteVideo, authenticate);
+router.post('/favorite-video', saveFavoriteVideo, authenticate);
 
 export default router;
